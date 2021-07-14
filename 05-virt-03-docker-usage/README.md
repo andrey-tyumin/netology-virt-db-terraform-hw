@@ -74,6 +74,77 @@ Hey, Netology
 </html>  
 ```
 Опубликуйте созданный форк в своем репозитории и предоставьте ответ в виде ссылки на докерхаб-репо.  
+Ссылка:https://hub.docker.com/r/imustgetout/netology-httpd  
+Вывод :
+```
+root@vps13419:~/netology-httpd# docker images
+REPOSITORY   TAG       IMAGE ID       CREATED      SIZE
+httpd        2.4       bd29370f84ea   5 days ago   138MB
+httpd        latest    bd29370f84ea   5 days ago   138MB
+root@vps13419:~/netology-httpd# cat Dockerfile
+FROM httpd:2.4
+COPY index.html /usr/local/apache2/htdocs/
+EXPOSE 80
+root@vps13419:~/netology-httpd# docker build -t imustgetout/netology-httpd:1st .
+Sending build context to Docker daemon  3.072kB
+Step 1/3 : FROM httpd:2.4
+ ---> bd29370f84ea
+Step 2/3 : COPY index.html /usr/local/apache2/htdocs/
+ ---> fa40197d2ed0
+Step 3/3 : EXPOSE 80
+ ---> Running in 5bce1a7911f3
+Removing intermediate container 5bce1a7911f3
+ ---> 172d0f7c4ccc
+Successfully built 172d0f7c4ccc
+Successfully tagged imustgetout/netology-httpd:1st
+root@vps13419:~/netology-httpd# docker ps     
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+root@vps13419:~/netology-httpd# docker images
+REPOSITORY                   TAG       IMAGE ID       CREATED          SIZE
+imustgetout/netology-httpd   1st       172d0f7c4ccc   24 seconds ago   138MB
+httpd                        2.4       bd29370f84ea   5 days ago       138MB
+httpd                        latest    bd29370f84ea   5 days ago       138MB
+root@vps13419:~/netology-httpd# docker run -d 172d0f7c4ccc   
+e8688bcac46160f4c88c44ce58ea2c58acaac2fe940c5bbd139f25061e6b0d7d
+root@vps13419:~/netology-httpd# docker ps
+CONTAINER ID   IMAGE          COMMAND              CREATED         STATUS         PORTS     NAMES
+e8688bcac461   172d0f7c4ccc   "httpd-foreground"   4 seconds ago   Up 3 seconds   80/tcp    condescending_austin
+root@vps13419:~/netology-httpd# docker inspect e8688bcac461 |grep IP
+            "LinkLocalIPv6Address": "",
+            "LinkLocalIPv6PrefixLen": 0,
+            "SecondaryIPAddresses": null,
+            "SecondaryIPv6Addresses": null,
+            "GlobalIPv6Address": "",
+            "GlobalIPv6PrefixLen": 0,
+            "IPAddress": "172.17.0.2",
+            "IPPrefixLen": 16,
+            "IPv6Gateway": "",
+                    "IPAMConfig": null,
+                    "IPAddress": "172.17.0.2",
+                    "IPPrefixLen": 16,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+root@vps13419:~/netology-httpd# curl 172.17.0.2:80
+<html>
+	<head>
+		Hey, Netology
+	</head>
+	<body>
+		<h1>I’m kinda DevOps now</h1>
+	</body>
+</html>
+root@vps13419:~/netology-httpd# docker push imustgetout/netology-httpd:1st  
+The push refers to repository [docker.io/imustgetout/netology-httpd]
+70fc519af2d7: Pushed 
+239871c4cac5: Mounted from library/httpd 
+9262f7dd1498: Mounted from library/httpd 
+61172cb5065c: Mounted from library/httpd 
+9fbbeddcc4e4: Mounted from library/httpd 
+764055ebc9a7: Mounted from library/httpd 
+1st: digest: sha256:fd78be75334e5353237c21b71efae0a5cd0a642577e1f79a9dde41822b3f094a size: 1573
+root@vps13419:~/netology-httpd# 
+```
 
 ---
 

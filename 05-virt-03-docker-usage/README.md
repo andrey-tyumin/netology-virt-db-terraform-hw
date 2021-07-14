@@ -157,3 +157,58 @@ root@vps13419:~/netology-httpd#
     Подключитесь к первому контейнеру с помощью exec и создайте текстовый файл любого содержания в /share/info;  
     Добавьте еще один файл в папку info на хостовой машине;  
     Подключитесь во второй контейнер и отобразите листинг и содержание файлов в /info контейнера.  
+```
+root@vps13419:~/3z# docker images
+REPOSITORY                   TAG       IMAGE ID       CREATED        SIZE
+imustgetout/netology-httpd   1st       172d0f7c4ccc   7 hours ago    138MB
+httpd                        2.4       bd29370f84ea   5 days ago     138MB
+httpd                        latest    bd29370f84ea   5 days ago     138MB
+debian                       latest    7a4951775d15   3 weeks ago    114MB
+centos                       latest    300e315adb2f   7 months ago   209MB
+root@vps13419:~/3z# docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+root@vps13419:~/3z# docker run -d -t -v /root/3z/info:/share/info centos
+9e22226e633b5d2c57fd07ec77f1ba41f01c445f6616c61891d0d22e76b05925
+root@vps13419:~/3z# docker run -d -t -v /root/3z/info:/info debian
+6cf5cad0e49e482e34724e2b14ed43aeaf55f5901e66f499036b5f79979ab471
+root@vps13419:~/3z# docker ps
+CONTAINER ID   IMAGE     COMMAND       CREATED          STATUS          PORTS     NAMES
+6cf5cad0e49e   debian    "bash"        13 seconds ago   Up 12 seconds             intelligent_wilson
+9e22226e633b   centos    "/bin/bash"   42 seconds ago   Up 41 seconds             determined_driscoll
+root@vps13419:~/3z# docker exec -ti 9e22226e633b bash
+[root@9e22226e633b /]# echo "centos test" >> /share/info/centos.test
+[root@9e22226e633b /]# cat /share/info/centos.test
+centos test
+[root@9e22226e633b /]# exit
+exit
+root@vps13419:~/3z# docker exec -ti 6cf5cad0e49e bash
+root@6cf5cad0e49e:/# ls -al /info
+total 12
+drwxr-xr-x 2 root root 4096 Jul 14 18:03 .
+drwxr-xr-x 1 root root 4096 Jul 14 18:01 ..
+-rw-r--r-- 1 root root   12 Jul 14 18:03 centos.test
+root@6cf5cad0e49e:/# exit
+exit
+root@vps13419:~/3z# ls -al ./info
+total 12
+drwxr-xr-x 2 root root 4096 Jul 14 21:03 .
+drwxr-xr-x 3 root root 4096 Jul 14 14:18 ..
+-rw-r--r-- 1 root root   12 Jul 14 21:03 centos.test
+root@vps13419:~/3z# echo "host test" >> ./info/host.test
+root@vps13419:~/3z# docker ps
+CONTAINER ID   IMAGE     COMMAND       CREATED         STATUS         PORTS     NAMES
+6cf5cad0e49e   debian    "bash"        4 minutes ago   Up 4 minutes             intelligent_wilson
+9e22226e633b   centos    "/bin/bash"   4 minutes ago   Up 4 minutes             determined_driscoll
+root@vps13419:~/3z# docker exec -ti 6cf5cad0e49e bash
+root@6cf5cad0e49e:/# ls -al /info
+total 16
+drwxr-xr-x 2 root root 4096 Jul 14 18:05 .
+drwxr-xr-x 1 root root 4096 Jul 14 18:01 ..
+-rw-r--r-- 1 root root   12 Jul 14 18:03 centos.test
+-rw-r--r-- 1 root root   10 Jul 14 18:05 host.test
+root@6cf5cad0e49e:/# cat /info/centos.test
+centos test
+root@6cf5cad0e49e:/# cat /info/host.test
+host test
+root@6cf5cad0e49e:/#
+```

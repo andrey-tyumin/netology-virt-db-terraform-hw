@@ -144,7 +144,7 @@ The push refers to repository [docker.io/imustgetout/ponysayinarch]
 root@vps13419:~/41# 
 ```
 
- Скриншот: 
+ ![alt-текст](https://github.com/andrey-tyumin/netology-virt-db-terraform-hw/blob/main/05-virt-04-docker-practical-skills/ponysay.png)
  
 ---
 

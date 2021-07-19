@@ -177,6 +177,25 @@ root@vps13419:~/41#
     Скриншоты логов запущенных вами контейнеров (из командной строки)
     Скриншоты веб-интерфейса Jenkins запущенных вами контейнеров (достаточно 1 скриншота на контейнер)
     Ссылки на образы в вашем хранилище docker-hub
+    
+Dockerfile:  
+[Dockerfile для amazoncorreto](https://github.com/andrey-tyumin/netology-virt-db-terraform-hw/blob/main/05-virt-04-docker-practical-skills/dockerfile_amazon)  
+[Dockerfile для Ubuntu](https://github.com/andrey-tyumin/netology-virt-db-terraform-hw/blob/main/05-virt-04-docker-practical-skills/dockerfile_ubuntu)  
+Скриншоты:  
+Логи:  
+Amazon  
+![alt_text](https://github.com/andrey-tyumin/netology-virt-db-terraform-hw/blob/main/05-virt-04-docker-practical-skills/amazon_log.png)  
+Ubuntu  
+![alt_text](https://github.com/andrey-tyumin/netology-virt-db-terraform-hw/blob/main/05-virt-04-docker-practical-skills/ubuntu_logs.png)  
+Веб-интерфейс:  
+Ubuntu  
+![alt_text](https://github.com/andrey-tyumin/netology-virt-db-terraform-hw/blob/main/05-virt-04-docker-practical-skills/ubuntu_jenkins.png)  
+Amazon  
+![alt_text](https://github.com/andrey-tyumin/netology-virt-db-terraform-hw/blob/main/05-virt-04-docker-practical-skills/amazon_jenkins.png)  
+
+Ссылки на образы:  
+[Amazon](https://hub.docker.com/repository/docker/imustgetout/jenkyamazon)  
+[Ubuntu](https://hub.docker.com/repository/docker/imustgetout/jenkyubuntu)  
 
 Задача 3
 

@@ -262,13 +262,20 @@ FROM ubuntu:latest
 RUN apt update -y
 RUN apt install curl -y
 CMD ["/bin/bash"]
+
+```
+```
 andrey@WS01:~/43$ docker build -t node .
 ```
-Продолжаем:
+
+Вывод сборки образа пропускаю
 
 ```
 andrey@WS01:~/43$ docker build -t ubuntu_hw43 -f ./dockerfile_ubuntu .
-
+```
+Тут вывод сборки тоже пропускаю.
+Продолжаем:
+```
 andrey@WS01:~/43$ docker run -d --net hw43 --ip 172.19.0.2 node
 2861e3d5671bca129ec208a59fc13877eeeb5e36c3f9f2e7a882aebfa95e574f
 andrey@WS01:~/43$ docker run -d -ti --net hw43 --ip 172.19.0.3 ubuntu_hw43 /bin/bash

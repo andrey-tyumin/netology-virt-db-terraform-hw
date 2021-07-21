@@ -225,4 +225,66 @@ Amazon
     Наполнение Dockerfile с npm приложением
     Скриншот вывода вызова команды списка docker сетей (docker network cli)
     Скриншот вызова утилиты curl с успешным ответом
+    
+Ответ:  
 
+```
+andrey@WS01:~/43$ docker network create hw43 --subnet 172.19.0.0/24
+708dec3d0ed68f69ee7a24b691a7583e3378eff61e0a2a29973ea71035116c9e
+andrey@WS01:~/43$ docker network ls
+NETWORK ID     NAME      DRIVER    SCOPE
+6dc66e3f46d8   bridge    bridge    local
+fe63edbf3c4e   host      host      local
+708dec3d0ed6   hw43      bridge    local
+acd2038e6eee   none      null      local
+andrey@WS01:~/43$ ls -al
+итого 16
+drwxrwxr-x  2 andrey andrey 4096 июл 21 13:27 .
+drwxr-xr-x 37 andrey andrey 4096 июл 21 12:50 ..
+-rw-rw-r--  1 andrey andrey  181 июл 21 13:27 Dockerfile
+-rw-rw-r--  1 andrey andrey   79 июл 20 16:02 dockerfile_ubuntu
+```
+
+Dockerfiles:
+
+```
+andrey@WS01:~/43$ cat Dockerfile 
+FROM node
+WORKDIR /opt
+RUN git clone https://github.com/simplicitesoftware/nodejs-demo
+WORKDIR /opt/nodejs-demo
+RUN npm install
+EXPOSE 3000
+CMD ["npm","start","172.19.0.2","3000"]
+
+andrey@WS01:~/43$ cat dockerfile_ubuntu 
+FROM ubuntu:latest
+RUN apt update -y
+RUN apt install curl -y
+CMD ["/bin/bash"]
+andrey@WS01:~/43$ docker build -t node .
+```
+Продолжаем:
+
+```
+andrey@WS01:~/43$ docker build -t ubuntu_hw43 -f ./dockerfile_ubuntu .
+
+andrey@WS01:~/43$ docker run -d --net hw43 --ip 172.19.0.2 node
+2861e3d5671bca129ec208a59fc13877eeeb5e36c3f9f2e7a882aebfa95e574f
+andrey@WS01:~/43$ docker run -d -ti --net hw43 --ip 172.19.0.3 ubuntu_hw43 /bin/bash
+9a50aba28287a6d110b86bc5d9c3fc714304947717123660c45dcf4d008c5c5a
+andrey@WS01:~/43$ docker ps
+CONTAINER ID   IMAGE         COMMAND                  CREATED          STATUS          PORTS      NAMES
+9a50aba28287   ubuntu_hw43   "/bin/bash"              6 seconds ago    Up 3 seconds               sleepy_rhodes
+2861e3d5671b   node          "docker-entrypoint.s…"   17 seconds ago   Up 14 seconds   3000/tcp   relaxed_driscoll
+andrey@WS01:~/43$ docker exec -ti 9a50aba28287 /bin/bash
+root@9a50aba28287:/# hostname -I
+172.19.0.3 
+root@9a50aba28287:/# curl 172.19.0.2:3000
+<!DOCTYPE html><html lang="en"><head><title>Node.js demo</title><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"><link rel="shortcut icon" href="/favicon.png"><link rel="stylesheet" href="/index.css"><script type="text/javascript" src="/jquery.js"></script><script type="text/javascript">$(document).ready(function() {
+    var ps = [{"row_id":"1","demoPrdSupId":"1","demoPrdSupId__demoSupCode":"BIM","demoPrdSupId__demoSupName":"BIM Computers Ldt","demoPrdSupId__demoSupUsrId":"25","demoPrdReference":"REF003","demoPrdName":"Infinite laptop","demoPrdType":"LAPTOP","demoPrdDescription":"This classical laptop has an extensive battery life.","demoPrdPicture":{"id":"10576","name":"laptop.png","path":"DemoProduct/demoPrdPicture/0/1/laptop.png","mime":"image/png","size":47828,"object":"DemoProduct","field":"demoPrdPicture","rowid":"1","content":"iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYAAACtWK6eAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAZdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuMjHxIGmVAAC6RElEQVR4Xuy9B3gV17n1f85R712iGNOLCk0CJAHqvfcu1CVUEEgCJNQQTaL3XkwHY2zccO+9945xj+34xjeOHSdxiq31X++ec0C2ce5N7s33feQv6VnPntkzZ86cmf3b632n6gAMalCD+gVdsXJQgxqUpitWDmpQg9J0xcpBDWpQmq5YOahBDUrTFSsHNahBabpi5aAGNShNV6wc1KAGpemKlYMa1KA0XbFyUIMalKYrVg5qUIPSdMXKQQ1qUJquW
+```
+Скриншоты:  
+
+![alt_text](https://github.com/andrey-tyumin/netology-virt-db-terraform-hw/blob/main/05-virt-04-docker-practical-skills/docker_network.png)
+![alt_text](https://github.com/andrey-tyumin/netology-virt-db-terraform-hw/blob/main/05-virt-04-docker-practical-skills/curl.png)

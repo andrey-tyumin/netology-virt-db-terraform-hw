@@ -2,8 +2,7 @@
 
 ## Введение
 
-Перед выполнением задания вы можете ознакомиться с 
-[дополнительными материалами](https://github.com/netology-code/virt-homeworks/tree/master/additional/README.md).
+[дополнительные материалы](https://github.com/netology-code/virt-homeworks/tree/master/additional/README.md).
 
 ## Задача 1
 

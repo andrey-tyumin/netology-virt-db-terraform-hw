@@ -254,6 +254,6 @@ secure-file-priv= NULL
 innodb_flush_log_at_trx_commit = 2
 innodb_file_per_table = 1
 innodb_log_buffer_size = 1M
-innodb_buffer_pool_size = 4G
+innodb_buffer_pool_size = 128M
 innodb_log_file_size = 100M
 ```

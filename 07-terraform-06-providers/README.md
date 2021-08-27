@@ -11,12 +11,14 @@
       [ResourcesMap](https://github.com/hashicorp/terraform-provider-aws/blob/2324b148b7c1a0e4a5dd33b0627349485deb6878/aws/provider.go#L459)  
       [DataSourcesMap](https://github.com/hashicorp/terraform-provider-aws/blob/2324b148b7c1a0e4a5dd33b0627349485deb6878/aws/provider.go#L186)  
 1. Для создания очереди сообщений SQS используется ресурс `aws_sqs_queue` у которого есть параметр `name`. 
+
     * С каким другим параметром конфликтует `name`? Приложите строчку кода, в которой это указано.
       #### Ответ:  
       https://github.com/hashicorp/terraform-provider-aws/blob/2324b148b7c1a0e4a5dd33b0627349485deb6878/aws/resource_aws_sqs_queue.go#L99  
       ```
       ConflictsWith: []string{"name_prefix"},
       ```
+      
     * Какая максимальная длина имени? 
       #### Ответ:  
       Каких-то ограничений для name в коде  
@@ -25,6 +27,7 @@
       Ограничение для name есть в документации terrafom  
       (https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/sqs_queue),  
       и равно 80 символам.  
+      
     * Какому регулярному выражению должно подчиняться имя?  
       #### Ответ: [a-zA-Z0-9_-]
 ---
